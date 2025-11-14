@@ -1,4 +1,4 @@
-mapboxgl.accessToken = 'pk.eyJ1Ijoid2lsbHNlbmVua28iLCJhIjoiY21oNm9tenlzMGxmNzJpb211eWN4OWhzMiJ9.CNtId7OzmVwm4EajEwdCGg';
+mapboxgl.accessToken = 'pk.eyJ1IjoibmFuY3kzMjQiLCJhIjoiY21oMTEyejlmMDY1YzJycHVwYXVyZ2U1ZiJ9.YSOrhRs2Nuc7-00ALC3Q_w';
 const apiKey = 'd60975b1-a097-482a-8862-c3d62b381b0a';
 
 const sidebar = document.getElementById('sidebar');
@@ -117,7 +117,7 @@ map.on('load', async () => {
             const lat = lat1 + (lat2 - lat1) * t;
 
             // Increment progress
-            p.progress += 0.001; // speed
+            p.progress += 0.0008; // speed
             if (p.progress > 1) p.progress = 0;
 
             return {
@@ -294,14 +294,22 @@ function handleTerminalData(data) {
         const option = document.createElement('option');
         option.value = t.TerminalID || t.TerminalName;
         option.textContent = t.TerminalName;
+        option.dataset.lat = t.Latitude;
+        option.dataset.lng = t.Longitude;
         select.appendChild(option);
     });
 
     select.addEventListener('change', (e) => {
         console.log("Selected terminal:", e.target.value);
+        const selected = e.target.options[e.target.selectedIndex];
         loadScheduleData(e.target.value);
         currentTerminalName = e.target.options[e.target.selectedIndex].textContent;
         console.log("Current terminal name set to:", currentTerminalName);
+        const lat = parseFloat(selected.dataset.lat);
+        const lng = parseFloat(selected.dataset.lng);
+
+        map.setCenter([lng, lat]);
+        map.setZoom(15);
     });
 
     updateMap(geojson);
@@ -327,7 +335,6 @@ function loadScheduleData(TerminalID) {
     console.log("Loading Schedule data...");
     const oldScript = document.getElementById('jsonpScript');
     if (oldScript) oldScript.remove();
-
     const script = document.createElement("script");
     script.id = 'jsonpScript';
     script.src = `https://www.wsdot.wa.gov/ferries/api/schedule/rest//scheduletoday/${TerminalID}//true?apiaccesscode=${apiKey}&callback=handleScheduleData`;
