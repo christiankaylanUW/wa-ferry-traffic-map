@@ -15,7 +15,7 @@ const layers = {
 
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
+    style: 'mapbox://styles/nancy324/cmhxwciko001u01sq7rf76i37',
     zoom: 8.2,
     center: [-122.5, 47.95]
 });
@@ -90,8 +90,8 @@ map.on('load', async () => {
         type: 'symbol',
         source: 'ferry-particles',
         layout: {
-            'icon-image': 'harbor-15', // or a custom particle sprite
-            'icon-size': 1,
+            'icon-image': 'chat', // or a custom particle sprite
+            'icon-size': .15,
             'icon-allow-overlap': true,
             'icon-ignore-placement': true
         },
