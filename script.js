@@ -91,7 +91,7 @@ map.on('load', async () => {
         source: 'ferry-particles',
         layout: {
             'icon-image': 'chat', // or a custom particle sprite
-            'icon-size': .15,
+            'icon-size': .4,
             'icon-allow-overlap': true,
             'icon-ignore-placement': true
         },
