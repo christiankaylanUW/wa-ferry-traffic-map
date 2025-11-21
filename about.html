@@ -69,30 +69,43 @@
     <h2>About This Webmap</h2>
 
     <p>
-        <span class="section-title">Overview</span>
-        [Insert overview text here]
+        <span class="section-title">Overview:</span>
+        <p>
+            Our map is an interactive web GIS that visualizes the ferry port traffic in the Port of Seattle across the central Puget Sound region. It combines a custom-designed Mapbox basemap with ferry route data and time-based vessel information obtained from the Washington State Department of Transportation (WSDOT). Riders can utilize this map to better understand ferry traffic and scheduling, implementing this app into their daily and regional commute.
+        </p>
     </p>
 
     <p>
-        <span class="section-title">Features</span>
-        [Insert feature lines here]<br>
-        [Insert feature lines here]<br>
-        [Insert feature lines here]
+        <span class="section-title">Features:</span>
+        <ul>
+            <li><b>Simulated Ferry View:</b> Simulated overview of ferry movement across the Puget Sound to detail ship movement.</li>
+            <br>
+            
+            <li><b>Live Ferry View:</b> Updated real-time locations of ships, utilizing WSDOT API.</li>
+                <ol type="a">
+                    <li>Ferry Information, Schedule, and Port locations.</li>
+                </ol>
+        </ul>
     </p>
 
     <p>
-        <span class="section-title">Data Sources</span>
-        [Insert data source information here]
+        <span class="section-title">Data Sources:</span>
+        <ul>
+            <li>WSDOT Ferry Routes Geojson (<a href="https://geo.wa.gov/datasets/WSDOT::wsdot-ferry-routes/explore?location=47.590612%2C-122.422831%2C11.79">Source</a>)</li>
+            <li>Ferry Terminals + Routes in Seattle (<a href="https://data.wsdot.wa.gov/arcgis/rest/services/Shared/FerryRoutes/MapServer">Source</a>)</li>
+            <li>WSDOT Ferry Schedule API (<a href="https://www.wsdot.wa.gov/ferries/api/schedule/documentation/rest.html">Source</a>)</li>
+            <li>Custom Mapbox Styling (<a href="https://api.mapbox.com/styles/v1/nancy324/cmhxwciko001u01sq7rf76i37.html?title=view&access_token=pk.eyJ1IjoibmFuY3kzMjQiLCJhIjoiY21oMTEyejlmMDY1YzJycHVwYXVyZ2U1ZiJ9.YSOrhRs2Nuc7-00ALC3Q_w&zoomwheel=true&fresh=true#0/0/0">Source</a>)</li>
+        </ul>
     </p>
 
     <p>
-        <span class="section-title">Technical Details</span>
-        [Insert technical details here]
-    </p>
-
-    <p>
-        <span class="section-title">Credits</span>
-        [Insert credits here]
+        <span class="section-title">Credits:</span>
+        <p>
+            Christian Kaylan Alviz, Mohaned Abdullatef Ibrahim, Nancy Nguyen, Micah Santos, Will Senenko 
+            <br>
+            <p>UW GEOG 328 Final Project</p>
+            
+      </p>
     </p>
 
     <a class="back-link" href="index.html">&larr; Back to Map</a>
