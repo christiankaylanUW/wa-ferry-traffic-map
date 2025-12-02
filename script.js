@@ -276,12 +276,16 @@ function handleTerminalData(data) {
 
     terminals.forEach(t => {
         const option = document.createElement('option');
-        option.value = t.TerminalID || t.TerminalName;
+        option.value = t.TerminalID;
         option.textContent = t.TerminalName;
         option.dataset.lat = t.Latitude;
         option.dataset.lng = t.Longitude;
         select.appendChild(option);
+        console.log(t.TerminalID)
     });
+
+    console.log("these are the terminals")
+    console.log(terminals)
 
     select.addEventListener('change', (e) => {
         console.log("Selected terminal:", e.target.value);
@@ -311,8 +315,10 @@ function loadterminalData() {
 
 
 function handleScheduleData(data) {
-    const ScheduleToday = data.TerminalCombos
-    updateTerminalInfo(ScheduleToday);
+    const ScheduleToday = data
+    console.log("Times:!!")
+    console.log(data)
+    updateTerminalInfo(data)
 }
 
 function loadScheduleData(TerminalID) {
@@ -321,7 +327,7 @@ function loadScheduleData(TerminalID) {
     if (oldScript) oldScript.remove();
     const script = document.createElement("script");
     script.id = 'jsonpScript';
-    script.src = `https://www.wsdot.wa.gov/ferries/api/schedule/rest//scheduletoday/${TerminalID}//true?apiaccesscode=${apiKey}&callback=handleScheduleData`;
+    script.src = `https://www.wsdot.wa.gov/ferries/api/terminals/rest/terminalsailingspace/${TerminalID}?apiaccesscode=${apiKey}&callback=handleScheduleData`;
     document.body.appendChild(script);
 }
 
@@ -343,18 +349,23 @@ function updateTerminalInfo(terminalCombos) {
         return;
     }
 
-    const html = terminalCombos.map(tc => {
+    schedule = terminalCombos.DepartingSpaces
+
+    const html = schedule.map(tc => {
         // Extract vessel name
         const vesselName = tc.VesselName || (tc.Times && tc.Times[0] && tc.Times[0].VesselName) || "Unknown";
 
         // Extract departing time
-        let departingTime = parseMSDate(tc.DepartingTime);
+        let departingTime = parseMSDate(tc.Departure);
         if (!departingTime && Array.isArray(tc.Times) && tc.Times.length > 0) {
             departingTime = parseMSDate(tc.Times[0].DepartingTime);
         }
 
         // Extract destination terminal
-        const destination = tc.ArrivingTerminalName || (tc.Times && tc.Times[0] && tc.Times[0].ArrivingTerminalName) || "Unknown";
+        ArrivingData = tc.SpaceForArrivalTerminals
+        console.log(ArrivingData[0].DriveUpSpaceCount)
+        console.log
+        const destination = ArrivingData[0].TerminalName || "Unknown";
 
         return `
         <table class="ferry-schedule-table">
