@@ -21,39 +21,106 @@ html, body {
   font-size: 13px;
 }
 
-/* Sidebar container */
+/* --- TOP BAR STYLES (Centered & Adjusted Width) --- */
+
 #sidebar {
+  /* Positioning: Center of the screen */
   position: absolute;
-  top: 10%;
-  bottom: 10%;
-  left: 50px;
-  width: 285px;
-  height: 80%;
-  background-color: #ffffff;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%); /* Moves it back 50% to perfectly center it */
+  
+  /* Sizing: Fit content but keep it reasonable */
+  width: fit-content;    /* Only as wide as it needs to be */
+  min-width: 600px;      /* Prevents it from being too cramped */
+  max-width: 90vw;       /* Prevents it from hitting edges on mobile */
+  height: auto;
+  max-height: 50vh;
+  overflow-y: auto;
+  
+  /* Theme: Grey Translucent */
+  background-color: rgba(138, 137, 137, 0.3);
+  color: #ffffff;
+  backdrop-filter: blur(4px);
+  
   border-radius: 10px;
-  box-shadow: 2px 0 6px rgba(0,0,0,0.25);
-  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 10px 30px; /* Added more side padding for breathing room */
+  z-index: 10;
+  
+  /* Layout: Center items horizontally */
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  z-index: 2;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* Centers the content block */
+  gap: 40px; /* Creates space between the Title and the Buttons */
+  flex-wrap: wrap; 
 }
 
-/* Sidebar header */
-#sidebar h1 {
-  font-size: 42px;
-  font-weight: bold;
-  margin: 0 0 10px 0;
-  color: #333;
+/* Grouping Containers */
+.topbar-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers text if it wraps */
   text-align: center;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Spacing between the individual buttons */
+}
+
+/* Headers */
+#sidebar h1 {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0;
+  color: #ffffff;
+  white-space: nowrap;
 }
 
 #sidebar h2 {
-  font-size: 20px;
+  font-size: 14px;
+  font-weight: normal;
+  margin: 2px 0 0 0;
+  color: #f0f0f0;
+}
+
+/* Controls */
+#portSelect {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Buttons */
+#refreshButton, #aboutButton, #backButton {
+  display: inline-block;
+  width: auto;
+  padding: 8px 20px; /* Slightly wider buttons look better centered */
+  background-color: #2b83ba;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
   font-weight: bold;
-  margin: 0 0 10px 0;
-  color: #333;
-  text-align: center;
+  margin: 0;
+  transition: background-color 0.2s ease;
+}
+
+#refreshButton:hover, #aboutButton:hover, #backButton:hover {
+  background-color: #1e5a85;
+}
+
+/* Dynamic Content (When you click a boat) */
+.ferry-schedule-table {
+    width: 100%;
+    margin: 10px auto; /* Centers the table */
 }
 
 /* Refresh button */
@@ -106,7 +173,7 @@ html, body {
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
-  margin-top: auto;
+  margin-top: 10px;
   transition: background-color 0.2s ease;
 }
 
@@ -212,13 +279,78 @@ input:checked + .slider:before {
   font-weight: bold;
   font-size: 14px;
   z-index: 3;
-  background-color: #ffffff;
+  background-color: rgba(82, 81, 81, 0.6);
+  color: #ffffff; /* White text */
+  backdrop-filter: blur(4px);
   border-radius: 10px;
   box-shadow: 2px 0 6px rgba(0,0,0,0.25);
   text-align: center;
   padding: 15px;
   display: flex;
-  color: black;
   flex-direction: column;
   align-items: center;
+}
+
+/* Legend Container */
+#legend {
+  position: absolute;
+  bottom: 40px;
+  left: 50px;
+  width: auto;
+  border-radius: 10px;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.25);
+  padding: 15px;
+  z-index: 3;
+  font-family: Arial, sans-serif;
+  color: #ffffff; /* White text */
+  background-color: rgba(82, 81, 81, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+#legend h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Individual Rows */
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #ffffff; 
+}
+
+.legend-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Icon Placeholders */
+.legend-icon {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.port-icon {
+  width: 12px;
+  height: 12px;
+  background-color: #FFD700;
+  border-radius: 50%;
+  border: 1px solid #fff; 
+}
+
+.route-line {
+  width: 25px;
+  height: 3px;
+  background-color: #0066cc; 
+  border-radius: 2px;
+}
+
+.legend-img {
+  width: 20px;
+  height: auto;
+  margin-right: 10px;
+  display: block;
 }

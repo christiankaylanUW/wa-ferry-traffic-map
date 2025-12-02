@@ -21,15 +21,19 @@
 <body>
     <div id="map"></div>
     <div id="sidebar"> 
-        <h1>Washington State <br> Ferry Map</h1>
-        <h2>To get started select a vessel on the Map <br><br> Or</h2>
-        <select id="portSelect">
-        <option disabled selected>Select a Ferry Terminal:</option>
-        <option disabled>Loading Terminals...</option>
-        </select>
-        <button id="refreshButton">Refresh Ferry Data</button>
-        <button class="mapButton" id="aboutButton">About This Map</button>
+        <div class="topbar-left">
+            <h1>WA State Ferry Map</h1>
+            <h2>Select a vessel or terminal</h2>
+        </div>
 
+        <div class="topbar-right">
+            <select id="portSelect">
+                <option disabled selected>Select a Ferry Terminal:</option>
+                <option disabled>Loading Terminals...</option>
+            </select>
+            <button id="refreshButton">Refresh</button>
+            <button class="mapButton" id="aboutButton">About</button>
+        </div>
     </div>
     <div id="switchbox">
         Toggle <br> Predicted/Real <br>Ferry Positions
@@ -38,6 +42,24 @@
             <span class="slider round"></span>
         </label>
     </div>
+
+    <!-- Legend Container -->
+    <div id="legend">
+        <h3>Legend</h3>
+        <div class="legend-item">
+            <span class="legend-icon port-icon"></span>
+            <span>Ferry Terminal</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-icon route-line"></span>
+            <span>Ferry Route</span>
+        </div>
+        <div class="legend-item">
+            <img src="imgs/mini_ferry_cutout.png" class="legend-img" alt="Boat">
+            <span>Ferry Vessel</span>
+        </div>
+    </div>
+
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.js"></script>
     <script src="script.js"></script>
 
