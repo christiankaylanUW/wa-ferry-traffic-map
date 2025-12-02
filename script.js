@@ -353,7 +353,7 @@ function parseMSDate(msDateString) {
 function updateTerminalInfo(terminalCombos) {
     sidebar.innerHTML = `<h2>Today's Ferry Schedule From ${currentTerminalName}</h2>`;
 
-    if (!terminalCombos || terminalCombos.length === 0) {
+    if (terminalCombos.Message) {
         sidebar.innerHTML += "<p>No schedule data available.</p>";
         sidebar.innerHTML += "<button id=backButton>Back to port list</button>";
         backButton();
@@ -361,6 +361,8 @@ function updateTerminalInfo(terminalCombos) {
     }
 
     schedule = terminalCombos.DepartingSpaces
+
+    sidebar.innerHTML += "<br><button id=backButton>Back to port list</button>";
 
     const html = schedule.map(tc => {
         // Extract vessel name
@@ -373,9 +375,14 @@ function updateTerminalInfo(terminalCombos) {
         }
 
         // Extract destination terminal
-        ArrivingData = tc.SpaceForArrivalTerminals
-        console.log(ArrivingData[0].DriveUpSpaceCount)
-        console.log
+        ArrivingData = tc.SpaceForArrivalTerminals;
+        console.log(ArrivingData[0].DriveUpSpaceCount);
+        console.log(ArrivingData[0].ReservableSpaceCount);
+
+        const PercentFull = 
+            Math.round((100 - (ArrivingData[0].DriveUpSpaceCount / ArrivingData[0].MaxSpaceCount * 100)) * 100) / 100;
+
+
         const destination = ArrivingData[0].TerminalName || "Unknown";
 
         return `
@@ -384,18 +391,21 @@ function updateTerminalInfo(terminalCombos) {
                 <th>Vessel</th>
                 <th>Departing</th>
                 <th>Destination</th>
+                <th>Capacity</th>
+                <th>Tickets</th>
             </tr>
             <tr>
                 <td>${vesselName}</td>
                 <td>${departingTime ? departingTime.toLocaleTimeString() : 'N/A'}</td>
                 <td>${destination}</td>
-            </tr>
+                <td><p style="color: ${ArrivingData[0].DriveUpSpaceHexColor};">${PercentFull}</p></td>
+                <td><a href="https://wave2go.wsdot.com/webstore/landingPage?cg=21&c=76">Tickets</a></td>
+            </tr%
         </table>
     `;
     }).join('');
 
     sidebar.innerHTML += html;
-    sidebar.innerHTML += "<button id=backButton>Back to port list</button>";
     backButton();
 }
 
