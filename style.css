@@ -23,7 +23,7 @@ html, body {
 
 /* --- TOP BAR STYLES (Centered & Adjusted Width) --- */
 
-#sidebar {
+#topbar {
   /* Positioning: Center of the screen */
   position: absolute;
   top: 20px;
@@ -72,7 +72,7 @@ html, body {
 }
 
 /* Headers */
-#sidebar h1 {
+#topbar h1 {
   font-size: 22px;
   font-weight: bold;
   margin: 0;
@@ -80,7 +80,7 @@ html, body {
   white-space: nowrap;
 }
 
-#sidebar h2 {
+#topbar h2 {
   font-size: 14px;
   font-weight: normal;
   margin: 2px 0 0 0;
@@ -178,7 +178,7 @@ table {
   margin-right: 20px;
 }
 
-/* The slider */
+/* Layer Toggle */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -327,6 +327,7 @@ input:checked + .slider:before {
   100% { transform: rotate(360deg); }
 }
 
+/* --- Intro Screen Styles --- */
 #intro {
   position: fixed;
   top: 50%; left: 50%;

@@ -3,8 +3,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibmFuY3kzMjQiLCJhIjoiY21oMTEyejlmMDY1YzJycHVwY
 const apiKey = 'd60975b1-a097-482a-8862-c3d62b381b0a';
 
 //Constants and globals
-const sidebar = document.getElementById('sidebar');
-const originalSidebarHTML = sidebar.innerHTML;
+const topbar = document.getElementById('topbar');
+const originaltopbarHTML = topbar.innerHTML;
 let currentTerminalName =  "";
 const layers = {
     ferries: "ferry-particles-layer",
@@ -141,20 +141,20 @@ map.on('load', async () => {
     loadterminalData();
 });
 
-
+//Load specific ferry information on click
 map.on('click', 'ferryData-layer', e => {
     const v = e.features[0].properties;
-    const sidebar = document.getElementById('sidebar');
+    const topbar = document.getElementById('topbar');
 
     map.flyTo({
-            center: [e.lngLat.lng,e.lngLat.lat+0.012],
-            zoom: 13.5,
-            speed: 1.2,      
-            curve: 1.42,      
-            essential: true   
-        });
+        center: [e.lngLat.lng,e.lngLat.lat+0.012],
+        zoom: 13.5,
+        speed: 1.2,      
+        curve: 1.42,      
+        essential: true   
+    });
 
-    sidebar.innerHTML = `
+    topbar.innerHTML = `
         <h3><strong>${v.VesselName}</strong></h3>
         <button id="backButton">Back to port list</button>
         <table class="ferry-schedule-table">
@@ -177,19 +177,24 @@ map.on('click', 'ferryData-layer', e => {
     backButton();
 });
 
+//Load specfic terminal schedule on click
 map.on('click', 'terminalData-layer', e => {
     const v = e.features[0].properties;
     currentTerminalName = v.TerminalName;
     loadScheduleData(v.TerminalID);
     map.flyTo({
-            center: [e.lngLat.lng, e.lngLat.lat+0.012],
-            zoom: 13.5,
-            speed: 1.2,      
-            curve: 1.42,      
-            essential: true   
-        });
+        center: [e.lngLat.lng, e.lngLat.lat+0.012],
+        zoom: 13.5,
+        speed: 1.2,      
+        curve: 1.42,      
+        essential: true   
+    });
 });
 
+/*
+  Create a GeoJSON from ferry vessel data and update the map
+  data: api data from WSDOT Ferry Vessel API
+*/
 function handleFerryData(data) {
     const vessels = data || [];
     if (!data) {
@@ -219,23 +224,27 @@ function handleFerryData(data) {
     updateMap(geojson);
     
     updateMap(geojson);
-    const sidebar = document.getElementById('sidebar');
-    const spinner = sidebar.querySelector('.spinner');
+    const topbar = document.getElementById('topbar');
+    const spinner = topbar.querySelector('.spinner');
     if (spinner) {
         spinner.remove();
-        }
+    }
 }
 
+//Load ferry vessel location data via JSONP
 function loadFerryData() {
     const oldScript = document.getElementById('jsonpScript');
     if (oldScript) oldScript.remove();
-
     const script = document.createElement("script");
     script.id = 'jsonpScript';
     script.src = `https://www.wsdot.wa.gov/Ferries/API/Vessels/rest/vessellocations?apiaccesscode=${apiKey}&callback=handleFerryData`;
     document.body.appendChild(script);
 }
 
+/*
+  Update map with ferry vessel or terminal data
+  geojson: geojson data to add to map
+*/
 function updateMap(geojson) {
     const isTerminal = !!geojson.features?.[0]?.properties?.TerminalName;
 
@@ -283,7 +292,10 @@ function updateMap(geojson) {
     }
 }
 
-
+/*
+  Create a GeoJSON for each ferry terminal and update the map and dropdown
+  data: api data from WSDOT Ferry Terminal API
+*/
 function handleTerminalData(data) {
     const terminals = data || [];
     if (!data) {
@@ -334,6 +346,7 @@ function handleTerminalData(data) {
     updateMap(geojson);
 }
 
+//Load ferry terminal data via JSONP
 function loadterminalData() {
     const oldScript = document.getElementById('jsonpScript');
     if (oldScript) oldScript.remove();
@@ -343,17 +356,24 @@ function loadterminalData() {
     document.body.appendChild(script);
 }
 
-
+/*
+  Pass schedule data to updateTerminalInfo function
+  data: api data from WSDOT Ferry Terminal API
+*/
 function handleScheduleData(data) {
-    const ScheduleToday = data
-    updateTerminalInfo(data)
+    const ScheduleToday = data;
+    updateTerminalInfo(data);
 }
 
+/*
+  Load schedule data for a specific terminal via JSONP
+  TerminalID: ID of terminal to load schedule for
+*/
 function loadScheduleData(TerminalID) {
-    const sidebar = document.getElementById('sidebar');
+    const topbar = document.getElementById('topbar');
     const spinner = document.createElement('div');
     spinner.className = 'spinner';
-    sidebar.appendChild(spinner);
+    topbar.appendChild(spinner);
     const oldScript = document.getElementById('jsonpScript');
     if (oldScript) oldScript.remove();
     const script = document.createElement("script");
@@ -362,6 +382,10 @@ function loadScheduleData(TerminalID) {
     document.body.appendChild(script);
 }
 
+/*
+  Parse Microsoft JSON date string to JavaScript Date object
+  msDateString: Microsoft JSON date string
+*/
 function parseMSDate(msDateString) {
     if (!msDateString) return null; // handle null values
     const match = /\/Date\((\d+)(?:[-+]\d+)?\)\//.exec(msDateString);
@@ -370,19 +394,23 @@ function parseMSDate(msDateString) {
     return new Date(timestamp);
 }
 
+/*
+  Update terminal info in the topbar with schedule data
+  terminalCombos: api data for terminal sailings
+*/
 function updateTerminalInfo(terminalCombos) {
-    sidebar.innerHTML = `<h3><strong>Today's Ferry Schedule From ${currentTerminalName}</strong></h3>`;
+    topbar.innerHTML = `<h3><strong>Today's Ferry Schedule From ${currentTerminalName}</strong></h3>`;
 
     if (terminalCombos.Message) {
-        sidebar.innerHTML += "<p>No schedule data available.</p>";
-        sidebar.innerHTML += "<button id=backButton>Back to port list</button>";
+        topbar.innerHTML += "<p>No schedule data available.</p>";
+        topbar.innerHTML += "<button id=backButton>Back to port list</button>";
         backButton();
         return;
     }
 
-    schedule = terminalCombos.DepartingSpaces
+    schedule = terminalCombos.DepartingSpaces;
 
-    sidebar.innerHTML += "<br><button id=backButton>Back to port list</button>";
+    topbar.innerHTML += "<br><button id=backButton>Back to port list</button>";
 
     const html = schedule.map(tc => {
         // Extract vessel name
@@ -419,10 +447,11 @@ function updateTerminalInfo(terminalCombos) {
     `;
     }).join('');
 
-    sidebar.innerHTML += html;
+    topbar.innerHTML += html;
     backButton();
 }
 
+//Toggle between simulated and real ferry positions by hiding/showing layers
 document.getElementById("ferryToggle").addEventListener("change", (e) => {   
     map.setLayoutProperty(
         "ferryRoutesLayer",
@@ -441,9 +470,10 @@ document.getElementById("ferryToggle").addEventListener("change", (e) => {
     );
 });
 
+//Back button functionality to return to main view
 function backButton() {
     document.getElementById('backButton').addEventListener('click', () => {
-        sidebar.innerHTML = originalSidebarHTML
+        topbar.innerHTML = originaltopbarHTML;
         map.flyTo({
             center: [-122.5, 47.95],
             zoom: 8.2,
@@ -454,11 +484,12 @@ function backButton() {
         document.getElementById('refreshButton').addEventListener('click', () => {
             loadFerryData();
             loadterminalData();
-            sidebar.innerHTML = originalSidebarHTML;
+            topbar.innerHTML = originaltopbarHTML;
         });
         loadFerryData();
         loadterminalData();
     });
 }
 
+//Intro screen dismissal on first click
 document.addEventListener("click", () => document.getElementById("intro").classList.add("hidden"), {once: true});

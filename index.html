@@ -5,39 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WSF Vessel Map</title>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="imgs/mini_ferry_cutout.png"> 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="imgs/mini_ferry_cutout.png"> 
 
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-   
-    <link
-        href="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.css"
-        rel="stylesheet"
-    >
+    <!--Style Sheets-->
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.css"/>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="map"></div>
     <div id="intro">
         <h1>Welcome to the WA State Ferry Map!</h1>
-        <br><br>
+        <br>
+        <br>
         <h3 class="introtext">
-            This map provides real-time locations of Washington State Ferries, along with terminal information and schedules. 
+            This map provides real-time locations of Washington State Ferries, along with terminal schedule information. 
             To get started, select a ferry terminal from the dropdown menu or click a terminal on the map. 
             You will then see that terminals schedule for the day, as well as the real-time capacity of each departing ferry.
             You can also switch between simulated and real-time ferry positions using the toggle in the bottom-right corner. 
             Click any ferry to view its current status, including its origin, destination, estimated arrival time, and current speed.
         </h3>
-        <br><H2>Click anywhere to get started.</H2>
+        <br>
+        <H2>Click anywhere to get started.</H2>
     </div>
-    <div id="sidebar"> 
+    <div id="topbar"> 
         <div class="topbar-left">
             <h1>WA State Ferry Map</h1>
             <h2>Select a vessel or terminal</h2>
         </div>
-
         <div class="topbar-right">
             <select id="portSelect">
                 <option disabled selected>Select a Ferry Terminal:</option>
@@ -45,15 +42,14 @@
             </select>
             <button id="refreshButton">Refresh</button>
             <button class="mapButton" id="aboutButton" onclick="window.location.href='about.html'">About</button></div>
-    </div>
-    <div id="switchbox">
+        </div>
+        <div id="switchbox">
         Toggle <br> Simulated/Real <br>Ferry Positions
         <label class="switch">
             <input type="checkbox" id="ferryToggle">
             <span class="slider round"></span>
         </label>
     </div>
-
     <!-- Legend Container -->
     <div id="legend">
         <h3>Legend</h3>
@@ -70,7 +66,7 @@
             <span>Ferry Vessel</span>
         </div>
     </div>
-
+    
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.16.0/mapbox-gl.js"></script>
     <script src="script.js"></script>
 </body>
