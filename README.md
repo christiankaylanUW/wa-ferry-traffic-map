@@ -1,9 +1,9 @@
 # Seattle Ferry Traffic Animation Map of Puget Sound
 
 ## Project Description
-Our project is an interactive web GIS application that visualizes ferry traffic in the Port of Seattle and across the central Puget Sound region. The map combines a custom-designed Mapbox basemap with ferry route data and time-based vessel information obtained from the Washington State Department of Transportation (WSDOT). We designed the application to be lightweight, visually engaging, and easy to navigate, allowing users to observe how ferries travel throughout Puget Sound and how traffic patterns change over time.
+Our project is an interactive web GIS application that visualizes ferry traffic in the Port of Seattle and across the central Puget Sound region. The map combines a custom-designed Mapbox basemap with ferry route data and time-based vessel information obtained from the Washington State Department of Transportation (WSDOT). We designed the application to be lightweight, visually engaging, and easy to navigate, allowing users to observe how ferries travel throughout Puget Sound and what the daily schedule's are for each terminal.
 
-The ferry system is an essential part of daily life in Washington State, especially around Seattle, Bainbridge Island, and the surrounding islands. While ferry schedules and ridership statistics are widely available online, our project provides a spatial and animated representation of actual vessel movement. This allows users to view intensity, directionality, and changes in ferry activity by day or by hour in a way that is more intuitive than static text or tables.
+The ferry system is an essential part of daily life in Washington State, especially around Seattle, Bainbridge Island, and the surrounding islands. While ferry schedules and ridership statistics are widely available online, our project provides a spatial and animated representation of actual vessel movement. This allows users to view intensity, directionality, and get real-time scheduling information such as current capacity.
 
 This project features an introduction page explaining basic user controls and website features to allow for a guided user-experience. This explanation re-appears on site re-load
 
@@ -56,7 +56,7 @@ Below are screenshots of the main map interface and the About page included in o
 - **handleTerminalData():** Creates GeoJSON objects for each terminal, populates the terminal dropdown list, and triggers the schedule loading process.
 - **loadTerminalData():** Fetches and updates terminal schedule information from the WSDOT terminal API.
 - **parseMSDate():** Reformats date values from the API into valid JavaScript Date objects.
-- **updateTerminalInfo():** Builds and displays the daily schedule for a selected terminal in the sidebar.
+- **updateTerminalInfo():** Builds and displays the daily schedule for a selected terminal in the topbar.
 
 ---
 
@@ -69,18 +69,17 @@ The WSDOT Ferry Routes dataset is a geospatial vector layer that maps the linear
 
 ---
 
-### **Ferry Terminals & Routes**  
-https://data.wsdot.wa.gov/arcgis/rest/services/Shared/FerryRoutes/MapServer  
+### **WSDOT Ferry Vessels API**  
+https://www.wsdot.wa.gov/ferries/api/vessels/documentation/rest.html  
 **Description:**  
-The dataset for Washington State Department of Transportation (WSDOT) titled “Ferry Routes (Public & Private)” is a geospatial feature layer portraying the routes of ferry services operating in Washington State’s waters. Represented as vector line features (polyline geometry), it includes scheduled car-ferry routes as well as known tribal, private, provincial and passenger-only ferry services. Attributes for each route include the operator (“Owner”), the State Route number if applicable (“SR”), and a label identifying the route terminals (“Display”). The layer is intended for reference and mapping in GIS applications—not for navigation—and supports queries in standard formats like JSON and GeoJSON. 
+The WSDOT Ferry Vessels API is a web-based service that provides real-time information for Washington State Ferries. Instead of static GIS data, it delivers details on each ferry including current speed, location (lat/lng), origin terminal, destination terminal, and eta. In addition, it provides alerts about disruptions or changes affecting specific vessels. This dataset is intended for developers building applications that need live ferry information, and access requires an API key from WSDOT.
 
 ---
 
-### **WSDOT Ferry Schedule API**  
-https://www.wsdot.wa.gov/ferries/api/schedule/documentation/rest.html  
+### **WSDOT Ferry Terminals API**  
+https://www.wsdot.wa.gov/ferries/api/terminals/documentation/rest.html  
 **Description:**  
-The WSDOT Ferry Schedule API is a web-based service that provides real-time and scheduled information for Washington State Ferries. Instead of static GIS data, it delivers time-based, transactional data such as upcoming sailings, route schedules, terminal-to-terminal connections, valid schedule date ranges, and any service adjustments or cancellations. The API also returns details on each ferry route for a given date, including departure times, direction, and day-type schedules. In addition, it provides alerts about disruptions or changes affecting specific sailings. This dataset is intended for developers building applications that need live or scheduled ferry information, and access requires an API key from WSDOT.
-
+The WSDOT Ferry Terminals API is a web-based service that provides real-time and scheduled information for Washington State Ferries. Instead of static GIS data, it delivers details on each ferry terminal for a given date, including departure times, vessel name, and current capacity. In addition, it provides the route names and terminal geographic locations. This dataset is intended for developers building applications that need live or scheduled ferry information, and access requires an API key from WSDOT.
 
 ---
 
@@ -107,11 +106,13 @@ GitHub is an open-source version control platform used for sharing and keeping t
 
 ## Acknowledgments
 This project was created by **Nancy Nguyen**, **Mohaned Abdullatef Ibrahim**, **Christian Alviz**, **Will Senenko**, and **Micah Santos**, with guidance from **Dr. Bo Zhao** and **Hudson Dougan**.  
-Data for the project was drawn from WSDOT’s open ferry terminal and route datasets, their ferry schedule API, and WSDOT’s ArcGIS REST Service Directory.
+Data for the project was drawn from WSDOT’s open ferry terminal and route datasets and their ferry terminals and vessels API.
 
 ---
 
 ## AI Use Disclosure
 - ChatGPT was used to debug the Mapbox basemap when a layer was not loading correctly.  
 - ChatGPT generated the custom SVG ferry icon used for the moving markers and favicon.  
-- ChatGPT was referenced to create a structural skeleton for the `about.html` page; however, all written content was original. 
+- ChatGPT was referenced to create a structural skeleton for the `about.html` page; however, all written content was original.
+- ChatGPT was used to generate code for the animation function
+- ChatGPT was used to generate a template for credits in the about section
