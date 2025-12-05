@@ -13,7 +13,7 @@ Note: Only ferry activity originating from terminals provided in WSDOT public AP
 The goal of this project is to use real-time data provided by WSDOT to give an accurate representation and animation of the ferry routes that are used in the Puget Sound area. The main message we want to convey is to show one of the many ways people travel around the Puget Sound area, how many people use these systems, and how extensive these systems are. 
 
 ## Application URL
-https://christiankaylanuw.github.io/flow_map_g328/
+https://christiankaylanuw.github.io/wa-ferry-traffic-map/
 
 ## Favicon
 Our custom favicon is a simplified version of our ferry icon. It is used across all pages of the application.
